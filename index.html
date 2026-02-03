@@ -3,91 +3,117 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Favorite Person</title>
+<title>For My Queen</title>
 <style>
-body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #ffebee; text-align: center; overflow: hidden; }
-.container { background: white; padding: 2.5rem; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 85%; max-width: 450px; position: relative; z-index: 10; border: 2px solid #f8bbd0; }
-h1 { color: #d32f2f; font-size: 1.6rem; margin-bottom: 20px; }
-.btn-group { display: flex; flex-direction: column; gap: 12px; }
-button { padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: all 0.2s; }
-.option-btn { background-color: #f8bbd0; color: #880e4f; }
-.option-btn:hover { background-color: #f48fb1; transform: scale(1.02); }
-#yesBtn { background-color: #4caf50; color: white; display: none; width: 100%; }
-#noBtn { background-color: #f44336; color: white; display: none; position: absolute; padding: 10px 20px; }
+body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #fff0f3; text-align: center; overflow: hidden; position: relative; transition: background 0.5s; background-size: cover; background-position: center; }
+.container { background: rgba(255, 255, 255, 0.92); padding: 2rem; border-radius: 30px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); width: 85%; max-width: 450px; position: relative; z-index: 10; border: 3px solid #ffb3c1; }
+h1 { color: #c9184a; font-size: 1.4rem; line-height: 1.5; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.05); }
+.btn-group { display: flex; flex-direction: column; gap: 15px; }
+button { padding: 15px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.main-btn { background: linear-gradient(45deg, #ff4d6d, #ff758f); color: white; width: 100%; }
+.main-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4); }
+#noBtn { background-color: #6c757d; color: white; position: absolute; padding: 10px 25px; }
+.meme-img { width: 100%; border-radius: 15px; margin-bottom: 15px; border: 2px solid #ffb3c1; }
+.couple-photo { width: 100%; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+
+.floating { position: absolute; top: -10%; animation: float 6s linear infinite; pointer-events: none; z-index: 1; font-size: 25px; }
+@keyframes float {
+0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
 </style>
 </head>
 <body>
-<div class="container" id="game-container">
-<h1 id="question-text">Where did I propose to you?</h1>
-<div class="btn-group" id="button-group"></div>
+<iframe id="music-player" width="0" height="0" src="" frameborder="0" allow="autoplay"></iframe>
+
+<div class="container" id="content">
+<h1>My love, I will always go above and beyond and will do anything just to make you happy babe. This Valentine’s I’ve got digital haha ❤️</h1>
+<div class="btn-group">
+<button class="main-btn" onclick="playMusicAndNext()">Start the Quiz ❤️</button>
+</div>
 </div>
 
 <script>
+function playMusicAndNext() {
+document.getElementById('music-player').src = "https://www.youtube.com/embed/EO4_qL7GCHQ?start=50&autoplay=1";
+// Adds the funny capybara background
+document.body.style.backgroundImage = "url('https://i.pinimg.com/originals/1b/30/41/1b304107149a4f6643666d93335555d4.gif')";
+showChallenge();
+}
+
+const emojis = ['❤️', '😘', '🍫', '🧸', '💖', '🌹'];
+function createEmoji() {
+const el = document.createElement('div');
+el.className = 'floating';
+el.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+el.style.left = Math.random() * 100 + 'vw';
+el.style.animationDuration = (Math.random() * 3 + 4) + 's';
+document.body.appendChild(el);
+setTimeout(() => el.remove(), 7000);
+}
+setInterval(createEmoji, 400);
+
 const questions = [
-{ q: "Where did I propose to you?", a: ["Outlet mall", "St Vital mall", "Polo Park mall"], correct: 2 },
+{ q: "Where did I propose to you?", a: ["Outlet mall", "St Vital mall", "Polo Park mall"], correct: 1 },
 { q: "What’s our relationship's spirit animal?", a: ["Capybara", "Karpincho", "Garu"], correct: 1 },
 { q: "My love for you is...", a: ["Tons", "Millennium", "Infinite"], correct: 2 }
 ];
+let currentIdx = 0;
 
-let currentQ = 0;
-const qText = document.getElementById('question-text');
-const btnGroup = document.getElementById('button-group');
+function showChallenge() {
+document.getElementById('content').innerHTML = `
+<img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJwamZpZzZ0am8zbmh6ZnR6Ym56Ym56Ym56Ym56Ym56Ym56JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3oriO0OEd9QIDdllqo/giphy.gif" class="meme-img">
+<h1>Here we go... the hardest test possible 😈</h1>
+<button class="main-btn" onclick="loadQuestion()">I'm Ready! 💪</button>
+`;
+}
 
 function loadQuestion() {
-qText.innerText = questions[currentQ].q;
-btnGroup.innerHTML = '';
-questions[currentQ].a.forEach((ans, index) => {
-const btn = document.createElement('button');
-btn.className = 'option-btn';
-btn.innerText = ans;
-btn.onclick = () => checkAnswer(index);
-btnGroup.appendChild(btn);
-});
+const q = questions[currentIdx];
+let buttons = q.a.map((ans, i) => `<button class="main-btn" onclick="check(${i})">${ans}</button>`).join('');
+document.getElementById('content').innerHTML = `<h1>${q.q}</h1><div class="btn-group">${buttons}</div>`;
 }
 
-function checkAnswer(index) {
-if (index === questions[currentQ].correct) {
-currentQ++;
-if (currentQ < questions.length) {
-loadQuestion();
+function check(i) {
+if (i === questions[currentIdx].correct) {
+currentIdx++;
+if (currentIdx < questions.length) loadQuestion();
+else finalPage();
 } else {
-finalChallenge();
-}
-} else {
-alert("Wrong answer! Try again, my love! ❤️");
+alert("Wrong! Try again, beautiful! ❤️");
 }
 }
 
-function finalChallenge() {
-qText.innerText = "Will you be my Valentine? ❤️";
-btnGroup.innerHTML = `
-<button id="yesBtn" style="display:block;">YES</button>
-<button id="noBtn" style="display:block;">NO</button>
+function finalPage() {
+document.getElementById('content').innerHTML = `
+<h1>Final Question... <br> Will you be my Valentine? ❤️</h1>
+<div class="btn-group">
+<button id="yesBtn" class="main-btn">YES! 🥰</button>
+<button id="noBtn">NO 😢</button>
+</div>
 `;
+const yes = document.getElementById('yesBtn');
+const no = document.getElementById('noBtn');
+let size = 1;
 
-const yesBtn = document.getElementById('yesBtn');
-const noBtn = document.getElementById('noBtn');
-let yesSize = 1.1;
-
-const moveNo = () => {
-const x = Math.random() * (window.innerWidth - 100);
-const y = Math.random() * (window.innerHeight - 50);
-noBtn.style.position = 'fixed';
-noBtn.style.left = x + 'px';
-noBtn.style.top = y + 'px';
-yesSize += 0.5;
-yesBtn.style.transform = `scale(${yesSize})`;
+const escape = () => {
+no.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+no.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+no.style.position = 'fixed';
+size += 0.5;
+yes.style.transform = `scale(${size})`;
 };
+no.onmouseover = escape;
+no.ontouchstart = (e) => { e.preventDefault(); escape(); };
 
-noBtn.addEventListener('mouseover', moveNo);
-noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
-
-yesBtn.onclick = () => {
-document.getElementById('game-container').innerHTML = "<h1>Yay! Best Valentine ever! 💖✨</h1><p>I love you more than words can say!</p>";
+yes.onclick = () => {
+document.getElementById('content').innerHTML = `
+<h1>Yay! I love you so much! 💖✨</h1>
+<img src="couple.jpg" class="couple-photo" onerror="this.src='https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJwamZpZzZ0am8zbmh6ZnR6Ym56Ym56Ym56Ym56Ym56Ym56JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/G96zgIcQn1L2xpmMlr/giphy.gif'">
+<p style="margin-top:15px; color:#c9184a; font-weight:bold;">Forever & Always!</p>
+`;
 };
 }
-
-loadQuestion();
 </script>
 </body>
 </html>
