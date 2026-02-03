@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Favorite Person</title>
+<style>
+body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #ffebee; text-align: center; overflow: hidden; }
+.container { background: white; padding: 2.5rem; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 85%; max-width: 450px; position: relative; z-index: 10; border: 2px solid #f8bbd0; }
+h1 { color: #d32f2f; font-size: 1.6rem; margin-bottom: 20px; }
+.btn-group { display: flex; flex-direction: column; gap: 12px; }
+button { padding: 15px; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: all 0.2s; }
+.option-btn { background-color: #f8bbd0; color: #880e4f; }
+.option-btn:hover { background-color: #f48fb1; transform: scale(1.02); }
+#yesBtn { background-color: #4caf50; color: white; display: none; width: 100%; }
+#noBtn { background-color: #f44336; color: white; display: none; position: absolute; padding: 10px 20px; }
+</style>
+</head>
+<body>
+<div class="container" id="game-container">
+<h1 id="question-text">Where did I propose to you?</h1>
+<div class="btn-group" id="button-group"></div>
+</div>
+
+<script>
+const questions = [
+{ q: "Where did I propose to you?", a: ["Outlet mall", "St Vital mall", "Polo Park mall"], correct: 2 },
+{ q: "What’s our relationship's spirit animal?", a: ["Capybara", "Karpincho", "Garu"], correct: 1 },
+{ q: "My love for you is...", a: ["Tons", "Millennium", "Infinite"], correct: 2 }
+];
+
+let currentQ = 0;
+const qText = document.getElementById('question-text');
+const btnGroup = document.getElementById('button-group');
+
+function loadQuestion() {
+qText.innerText = questions[currentQ].q;
+btnGroup.innerHTML = '';
+questions[currentQ].a.forEach((ans, index) => {
+const btn = document.createElement('button');
+btn.className = 'option-btn';
+btn.innerText = ans;
+btn.onclick = () => checkAnswer(index);
+btnGroup.appendChild(btn);
+});
+}
+
+function checkAnswer(index) {
+if (index === questions[currentQ].correct) {
+currentQ++;
+if (currentQ < questions.length) {
+loadQuestion();
+} else {
+finalChallenge();
+}
+} else {
+alert("Wrong answer! Try again, my love! ❤️");
+}
+}
+
+function finalChallenge() {
+qText.innerText = "Will you be my Valentine? ❤️";
+btnGroup.innerHTML = `
+<button id="yesBtn" style="display:block;">YES</button>
+<button id="noBtn" style="display:block;">NO</button>
+`;
+
+const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
+let yesSize = 1.1;
+
+const moveNo = () => {
+const x = Math.random() * (window.innerWidth - 100);
+const y = Math.random() * (window.innerHeight - 50);
+noBtn.style.position = 'fixed';
+noBtn.style.left = x + 'px';
+noBtn.style.top = y + 'px';
+yesSize += 0.5;
+yesBtn.style.transform = `scale(${yesSize})`;
+};
+
+noBtn.addEventListener('mouseover', moveNo);
+noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
+
+yesBtn.onclick = () => {
+document.getElementById('game-container').innerHTML = "<h1>Yay! Best Valentine ever! 💖✨</h1><p>I love you more than words can say!</p>";
+};
+}
+
+loadQuestion();
+</script>
+</body>
+</html>
